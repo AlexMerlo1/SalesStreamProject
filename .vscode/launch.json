@@ -9,14 +9,7 @@
       "name": "App",
       "request": "launch",
       "mainClass": "App",
-      "projectName": "SalesStreamProject_32d11376"
-    },
-    {
-      "type": "java",
-      "name": "App",
-      "request": "launch",
-      "mainClass": "App",
-      "projectName": "SalesStreamProject_db549bcc",
+      "projectName": "SalesStream_d725a0",
       "vmArgs": "--module-path 'c:\\Users\\alexm\\OneDrive\\Desktop\\javafx-sdk-21.0.1\\lib' --add-modules javafx.graphics,javafx.controls,javafx.base,javafx.fxml,javafx.media"
     }
   ]
