@@ -1,21 +1,22 @@
+import scenes.*;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.Group;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
+public class App extends Application {
 
-public class App extends Application{
-    public void start(Stage primaryStage){
-        Circle circ = new Circle(40, 40, 30);
-        Group root = new Group(circ);
-        Scene scene = new Scene(root, 400, 300);
+    public static void main(String[] args) {
+        launch();
+    }
 
-        primaryStage.setTitle("My App");
-        primaryStage.setScene(scene);
+    @Override
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("Login Page");
+
+        // Create the initial login scene
+        LoginScene loginScene = new LoginScene(primaryStage);
+        primaryStage.setScene(loginScene.createLoginScene());
+
         primaryStage.show();
     }
-    public static void main(String[] args) throws Exception {
-    launch(args);
-    }
+
 }
