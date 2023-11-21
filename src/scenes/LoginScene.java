@@ -83,7 +83,7 @@ public class LoginScene {
         loginGrid.add(loginBtn, 0, 2);
         loginGrid.add(invalidPassword, 0, 3);
 
-        Scene loginScene = new Scene(loginGrid, 600, 400);
+        Scene loginScene = new Scene(loginGrid, 600, 500);
         primaryStage.setScene(loginScene);
 
         return loginScene;
