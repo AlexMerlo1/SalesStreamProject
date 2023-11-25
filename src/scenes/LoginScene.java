@@ -72,6 +72,8 @@ public class LoginScene {
         initializeComponents();
 
         Button loginBtn = new Button("Login");
+        loginBtn.getStyleClass().add("login-button");
+        loginBtn.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         loginBtn.setOnAction(e -> handleLogin());
 
         GridPane loginGrid = new GridPane();
@@ -80,8 +82,10 @@ public class LoginScene {
         loginGrid.setVgap(10);
         loginGrid.add(userTextField, 0, 0);
         loginGrid.add(passwordField, 0, 1);
-        loginGrid.add(loginBtn, 0, 2);
+        loginGrid.add(loginBtn, 1, 2);
         loginGrid.add(invalidPassword, 0, 3);
+
+        loginBtn.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
 
         Scene loginScene = new Scene(loginGrid, 600, 500);
         primaryStage.setScene(loginScene);

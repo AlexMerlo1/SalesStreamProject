@@ -5,12 +5,16 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import scenes.ReceiptScene;
-
+import scenes.MenuScene;
 import java.util.List;
 
 public class MenuButtons {
+    private MenuScene menuScene;
+    public MenuButtons(MenuScene menuScene) {
+        this.menuScene = menuScene;
+    }
 
-    public static Button[] createButtons(Pane layout, Items.Item[] items, List<Items.Item> orderList, ListView<String> orderListView, CreateReceipt receipt, Stage primaryStage) {
+    public Button[] createButtons(Pane layout, Items.Item[] items, List<Items.Item> orderList, ListView<String> orderListView, CreateReceipt receipt, Stage primaryStage) {
         Button[] buttons = new Button[items.length];
 
         for (int i = 0; i < items.length; i++) {
@@ -22,7 +26,7 @@ public class MenuButtons {
         return buttons;
     }
 
-    private static Button createButton(Pane layout, Items.Item item, double x, double y, String styleClass, List<Items.Item> orderList, ListView<String> orderListView, CreateReceipt receipt, Stage primaryStage) {
+    private Button createButton(Pane layout, Items.Item item, double x, double y, String styleClass, List<Items.Item> orderList, ListView<String> orderListView, CreateReceipt receipt, Stage primaryStage) {
         double paddingX = 50;
         double paddingY = 50;
 
@@ -39,7 +43,7 @@ public class MenuButtons {
         return button;
     }
 
-    private static void handleButtonClick(Items.Item item, List<Items.Item> orderList, ListView<String> orderListView, CreateReceipt receipt) {
+    private void handleButtonClick(Items.Item item, List<Items.Item> orderList, ListView<String> orderListView, CreateReceipt receipt) {
         // Add the selected item to the order list
         orderList.add(item);
 
@@ -52,7 +56,11 @@ public class MenuButtons {
         // Update receipt display
         receipt.updateReceiptDisplay();
 
-        System.out.println(item.getItemName() + " added to the order! Price: $" + item.getItemPrice());
+        // Get the total amount of order
+        receipt.calculateTotal(orderList);
+
+        // Update the receipt display
+        menuScene.updateTotalSpendingLabel();
     }
 
     public static void updateOrderListView(ListView<String> orderListView, List<Items.Item> orderList) {
@@ -76,6 +84,45 @@ public class MenuButtons {
         finishBtn.getStyleClass().add("finish-button");
 
         return finishBtn;
+    }
+
+    // Create Remove button and functionality
+    public Button createRemoveButton(Pane layout, ListView<String> orderListView, List<Items.Item> orderList) {
+        Button removeBtn = new Button("Remove");
+        removeBtn.setOnAction(e -> removeSelectedItem(orderListView, orderList));
+        removeBtn.prefWidthProperty().bind(layout.widthProperty().multiply(0.1));
+        removeBtn.prefHeightProperty().bind(layout.heightProperty().multiply(0.05));
+        removeBtn.layoutXProperty().bind(layout.widthProperty().multiply(0.6));
+        removeBtn.layoutYProperty().bind(layout.heightProperty().multiply(0.9));
+        // Customize the button properties as needed
+        return removeBtn;
+    }
+
+    private void removeSelectedItem(ListView<String> orderListView, List<Items.Item> orderList) {
+        // Get the selected item in the order list view
+        String selectedItem = orderListView.getSelectionModel().getSelectedItem();
+
+        if (selectedItem != null) {
+            // Find the corresponding item in the orderList and remove it
+            Items.Item selectedOrderItem = findOrderItem(selectedItem, orderList);
+            if (selectedOrderItem != null) {
+                orderList.remove(selectedOrderItem);
+            }
+            
+
+            // Update the order list view
+            updateOrderListView(orderListView, orderList);
+            menuScene.updateTotalSpendingLabel();
+        }
+    }
+
+    private static Items.Item findOrderItem(String selectedItem, List<Items.Item> orderList) {
+        for (Items.Item item : orderList) {
+            if ((item.getItemName() + " - $" + item.getItemPrice()).equals(selectedItem)) {
+                return item;
+            }
+        }
+        return null;
     }
 
     private static void switchToReceiptScene(Stage primaryStage, List<Items.Item> orderList) {
