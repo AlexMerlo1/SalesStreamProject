@@ -38,16 +38,15 @@ public class MenuScene {
 
 
     public void show() {
-        Button logoutBtn = new Button("Logout");
-        logoutBtn.layoutXProperty().bind(primaryStage.widthProperty().subtract(logoutBtn.widthProperty()));
-        logoutBtn.setLayoutY(0);
-        logoutBtn.setOnAction(e -> switchToLoginScene());
 
         menuLayout = new Pane();
         menuLayout.setPadding(new Insets(25, 25, 25, 25));
 
         // Style rectangle where receipt will be shown
         menuLayout.getChildren().add(createReceiptRectangle());
+
+        // Create the logout button
+        menuButtons.createLogoutButton(menuLayout, primaryStage);
 
         // Create the reciept to be shown on the screen
         receipt = new CreateReceipt(orderListView, totalSpendingLabel);
@@ -104,10 +103,7 @@ public class MenuScene {
 
         return rectangle;
     }
-    private void switchToLoginScene() {
-        LoginScene loginScene = new LoginScene(primaryStage);
-        loginScene.createLoginScene();
-    }
+
     public void updateTotalSpendingLabel() {
         totalSpendingLabel.setText("Total: $" + receipt.calculateTotal(orderList));
     }

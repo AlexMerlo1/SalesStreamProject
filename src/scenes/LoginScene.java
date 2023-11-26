@@ -4,9 +4,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import scenes.logic.MenuButtons;
+import javafx.scene.layout.Pane;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,19 +29,17 @@ public class LoginScene {
         invalidPassword = new Text("Invalid username or password");
         invalidPassword.setVisible(false);
 
-        Button loginBtn = new Button("Login");
+        // Create a Pane for the layout
+        Pane layoutPane = new Pane();
+
+        // Use the modified createLoginButton method from MenuButtons
+        Button loginBtn = MenuButtons.createLoginButton(layoutPane, 0, 0, 0, 0, "login-button");
         loginBtn.setOnAction(e -> handleLogin());
 
-        GridPane loginGrid = new GridPane();
-        loginGrid.setAlignment(javafx.geometry.Pos.CENTER);
-        loginGrid.setHgap(10);
-        loginGrid.setVgap(10);
-        loginGrid.add(userTextField, 0, 0);
-        loginGrid.add(passwordField, 0, 1);
-        loginGrid.add(loginBtn, 0, 2);
-        loginGrid.add(invalidPassword, 0, 3);
 
-        Scene loginScene = new Scene(loginGrid, 600, 400);
+        layoutPane.getChildren().addAll(userTextField, passwordField, loginBtn, invalidPassword);
+
+        Scene loginScene = new Scene(layoutPane, 600, 400);
         primaryStage.setScene(loginScene);
     }
 
@@ -69,29 +68,69 @@ public class LoginScene {
         }
     }
     public Scene createLoginScene() {
+        Pane loginPane = new Pane();
         initializeComponents();
 
+        // Create welcome/login text position and style
+        Text welcomeText = new Text("Welcome To SalesStream");
+        Text loginText = new Text("Please Login");
+
+        welcomeText.getStyleClass().add("login-text");
+        welcomeText.setStyle("login-text");
+
+        loginText.getStyleClass().add("login-text");
+        loginText.setStyle("login-text");
+        
+
+        welcomeText.layoutXProperty().bind(userTextField.layoutXProperty().add(userTextField.widthProperty().subtract(welcomeText.boundsInLocalProperty().get().getWidth()).divide(2)).subtract(75));
+        welcomeText.layoutYProperty().bind(loginPane.heightProperty().multiply(0.3));
+        
+        loginText.layoutXProperty().bind(passwordField.layoutXProperty().add(passwordField.widthProperty().subtract(loginText.boundsInLocalProperty().get().getWidth()).divide(2)).subtract(35));
+        loginText.layoutYProperty().bind(loginPane.heightProperty().multiply(0.35));
+        
+        // Create login button and style
         Button loginBtn = new Button("Login");
         loginBtn.getStyleClass().add("login-button");
-        loginBtn.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         loginBtn.setOnAction(e -> handleLogin());
+    
+        // Make the background color
+        loginPane.setStyle("-fx-background-color: #2B6C68;");
 
-        GridPane loginGrid = new GridPane();
-        loginGrid.setAlignment(javafx.geometry.Pos.CENTER);
-        loginGrid.setHgap(10);
-        loginGrid.setVgap(10);
-        loginGrid.add(userTextField, 0, 0);
-        loginGrid.add(passwordField, 0, 1);
-        loginGrid.add(loginBtn, 1, 2);
-        loginGrid.add(invalidPassword, 0, 3);
+        // Create the login scene with percentage based positioning and sizes
+        double widthPercentage = 0.5;
+        double buttonWidthPercentage = 0.15;
+        double paddingYPercentage = 0.05;
+        
+        // Bind text positions to the text field positions
+        userTextField.prefWidthProperty().bind(loginPane.widthProperty().multiply(0.25));
+        userTextField.prefHeightProperty().bind(loginPane.heightProperty().multiply(0.05));
+        userTextField.layoutXProperty().bind(loginPane.widthProperty().multiply(0.4));
+        userTextField.layoutYProperty().bind(loginPane.heightProperty().multiply(0.4));
+        
+        passwordField.prefWidthProperty().bind(loginPane.widthProperty().multiply(0.25));
+        passwordField.prefHeightProperty().bind(loginPane.heightProperty().multiply(0.05));
+        passwordField.layoutXProperty().bind(loginPane.widthProperty().multiply(0.4));
+        passwordField.layoutYProperty().bind(userTextField.layoutYProperty().add(userTextField.heightProperty()).add(loginPane.heightProperty().multiply(paddingYPercentage)));
+        
+        loginBtn.prefWidthProperty().bind(loginPane.widthProperty().multiply(buttonWidthPercentage));
+        loginBtn.prefHeightProperty().bind(loginPane.heightProperty().multiply(0.075));
+        loginBtn.layoutXProperty().bind(loginPane.widthProperty().multiply(0.5));
+        loginBtn.layoutYProperty().bind(passwordField.layoutYProperty().add(passwordField.heightProperty()).add(loginPane.heightProperty().multiply(paddingYPercentage)));
+        
+        invalidPassword.wrappingWidthProperty().bind(loginPane.widthProperty().multiply(widthPercentage));
+        invalidPassword.layoutXProperty().bind(loginPane.widthProperty().multiply(0.45));
+        invalidPassword.layoutYProperty().bind(loginBtn.layoutYProperty().add(loginBtn.heightProperty()).add(loginPane.heightProperty().multiply(paddingYPercentage)));
+        
+        // Add all elements to the scene so they appear on the screen
+        loginPane.getChildren().addAll(userTextField, passwordField, loginBtn, invalidPassword, welcomeText, loginText);
+        Scene loginScene = new Scene(loginPane, 600, 500);
 
-        loginBtn.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-
-        Scene loginScene = new Scene(loginGrid, 600, 500);
         primaryStage.setScene(loginScene);
-
+        loginScene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         return loginScene;
     }
+    
+
     public Scene getLoginScene() {
         return primaryStage.getScene();
     }

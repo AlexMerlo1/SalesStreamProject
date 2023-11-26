@@ -5,13 +5,24 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import scenes.ReceiptScene;
+import scenes.LoginScene;
 import scenes.MenuScene;
 import java.util.List;
 
 public class MenuButtons {
+
     private MenuScene menuScene;
     public MenuButtons(MenuScene menuScene) {
         this.menuScene = menuScene;
+    }
+    public static Button createLoginButton(Pane layout, double x, double y, double paddingX, double paddingY, String styleClass) {
+        Button loginBtn = new Button("Login");
+        loginBtn.prefWidthProperty().bind(layout.widthProperty().multiply(0.15));
+        loginBtn.prefHeightProperty().bind(layout.heightProperty().multiply(0.05));
+        loginBtn.layoutXProperty().bind(layout.widthProperty().multiply(x).add(paddingX));
+        loginBtn.layoutYProperty().bind(layout.heightProperty().multiply(y).add(paddingY));
+        loginBtn.getStyleClass().add(styleClass);
+        return loginBtn;
     }
 
     public Button[] createButtons(Pane layout, Items.Item[] items, List<Items.Item> orderList, ListView<String> orderListView, CreateReceipt receipt, Stage primaryStage) {
@@ -128,6 +139,25 @@ public class MenuButtons {
     private static void switchToReceiptScene(Stage primaryStage, List<Items.Item> orderList) {
         ReceiptScene.showReceipt(primaryStage, orderList);
     }
+    
+    public Button createLogoutButton(Pane menuLayout, Stage primaryStage) {
+        Button logoutBtn = new Button("Logout");
+        
+        logoutBtn.prefWidthProperty().bind(menuLayout.widthProperty().multiply(0.1));
+        logoutBtn.prefHeightProperty().bind(menuLayout.heightProperty().multiply(0.05));
+    
+        logoutBtn.layoutXProperty().bind(primaryStage.widthProperty().subtract(logoutBtn.widthProperty().add(30))); 
+        logoutBtn.layoutYProperty().bind(primaryStage.heightProperty().multiply(0.05));
+        
+        logoutBtn.setOnAction(e -> switchToLoginScene(primaryStage));
+    
+        menuLayout.getChildren().add(logoutBtn);
 
+        return logoutBtn;
+    }
 
+    private void switchToLoginScene(Stage primaryStage) {
+        LoginScene loginScene = new LoginScene(primaryStage);
+        loginScene.createLoginScene();
+    }
 }
