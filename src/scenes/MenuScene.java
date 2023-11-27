@@ -2,7 +2,6 @@ package scenes;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -29,7 +28,7 @@ public class MenuScene {
     public MenuScene(Stage primaryStage, String username) {
         this.primaryStage = primaryStage;
         this.username = username;
-        this.receipt = new CreateReceipt(orderListView, totalSpendingLabel);
+        this.receipt = new CreateReceipt();
         this.totalSpendingLabel = new Label();
         this.menuButtons = new MenuButtons(this);
         this.removeButton = new MenuButtons(this);
@@ -49,7 +48,7 @@ public class MenuScene {
         menuButtons.createLogoutButton(menuLayout, primaryStage);
 
         // Create the reciept to be shown on the screen
-        receipt = new CreateReceipt(orderListView, totalSpendingLabel);
+        receipt = new CreateReceipt();
         // Create items
         Items.Item item1 = Products.item1;
         Items.Item item2 = Products.item2;

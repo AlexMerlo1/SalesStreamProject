@@ -142,7 +142,7 @@ public class MenuButtons {
     
     public Button createLogoutButton(Pane menuLayout, Stage primaryStage) {
         Button logoutBtn = new Button("Logout");
-        
+
         logoutBtn.prefWidthProperty().bind(menuLayout.widthProperty().multiply(0.1));
         logoutBtn.prefHeightProperty().bind(menuLayout.heightProperty().multiply(0.05));
     

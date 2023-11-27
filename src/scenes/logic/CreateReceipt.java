@@ -16,8 +16,7 @@ public class CreateReceipt {
     private ArrayList<Items.Item> receiptItems = new ArrayList<>();
     private double total;
 
-    public CreateReceipt(ListView<String> orderListView, Label totalSpendingLabel) {
-        this.orderListView = orderListView;
+    public CreateReceipt() {
         // Create the layout for the receipt
         receiptLayout = new VBox();
         receiptLabel = new Label("Receipt");

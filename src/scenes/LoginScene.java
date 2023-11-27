@@ -25,7 +25,9 @@ public class LoginScene {
 
     private void initializeComponents() {
         userTextField = new TextField();
+        userTextField.setPromptText("Username");
         passwordField = new PasswordField();
+        passwordField.setPromptText("Password");
         invalidPassword = new Text("Invalid username or password");
         invalidPassword.setVisible(false);
 
