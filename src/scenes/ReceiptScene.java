@@ -4,7 +4,6 @@ import scenes.logic.*;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -13,14 +12,15 @@ import javafx.scene.control.Button;
 
 import java.util.List;
 
-
 public class ReceiptScene {
-
+    private static String username;
     private static Stage receiptStage;
     private static MenuScene menuScene;
+    private static MenuButtons menuButtons;
 
     public ReceiptScene(MenuScene menuScene) {
         ReceiptScene.menuScene = menuScene;
+        this.menuButtons = menuButtons;
     }
 
     public static void showReceipt(Stage primaryStage, List<Items.Item> orderList) {
@@ -28,28 +28,24 @@ public class ReceiptScene {
 
         double total = receipt.calculateTotal(orderList);
 
-        Pane receiptLayout = createReceiptLayout(orderList);
         Pane receiptLayout = createReceiptLayout(primaryStage, orderList);
-
+        receiptLayout.setStyle("-fx-background-color: #2B6C68;");
         // Create a scene for the receipt
         Scene receiptScene = new Scene(receiptLayout, 400, 300);
-        ReceiptButtons receiptButtons = new ReceiptButtons();
-        ReceiptButtons receiptButtons = new ReceiptButtons(menuScene, null);
+        ReceiptButtons receiptButtons = new ReceiptButtons(menuScene, new ReceiptScene(menuScene));
 
         // Create a new stage for the receipt
-        Stage receiptStage = new Stage();
         receiptStage = new Stage();
         receiptStage.setTitle("Receipt");
         receiptStage.setScene(receiptScene);
 
         // Show the receipt stage
         receiptStage.show();
+
     }
 
-    private static Pane createReceiptLayout(List<Items.Item> orderList) {
     private static Pane createReceiptLayout(Stage primaryStage, List<Items.Item> orderList) {
         Pane receiptLayout = new Pane();
-        ReceiptButtons receiptButtons = new ReceiptButtons();
         ReceiptButtons receiptButtons = new ReceiptButtons(menuScene, new ReceiptScene(menuScene));
         Button cardButton = receiptButtons.createPayWithCardButton(receiptLayout);
 
@@ -63,20 +59,17 @@ public class ReceiptScene {
             }
         });
 
-        Button cashButton = receiptButtons.createPayWithCashButton(receiptLayout);
         Button cancelButton = receiptButtons.createCancelOrderButton(receiptLayout);
-        receiptLayout.getChildren().addAll(cardButton, cashButton, cancelButton);
+        receiptLayout.getChildren().addAll(cardButton, cancelButton);
 
         // Attach event handler to the cancel button
         cancelButton.setOnAction(event -> {
             // Perform actions when the cancel button is clicked
-            closeReceiptStage();
-            showMenuScene(primaryStage);
+            closeReceiptStage(primaryStage);
         });
 
         return receiptLayout;
     }
-}
 
     private static void showOrderCompleteScene(Stage primaryStage) throws Exception {
         // Create a new stage for the order complete scene
@@ -100,14 +93,15 @@ public class ReceiptScene {
         orderCompleteStage.setScene(orderCompleteScene);
         orderCompleteStage.showAndWait();
 
-        closeReceiptStage();
+        closeReceiptStage(primaryStage);
     }
 
-    private static void showMenuScene(Stage primaryStage) {
-    }
-
-    private static void closeReceiptStage() {
+    private static void closeReceiptStage(Stage primaryStage) {
         // Close the current stage (receipt stage)
         receiptStage.close();
+
+        // Create a new MenuScene and show it
+        MenuScene newMenuScene = new MenuScene(primaryStage, username);
+        newMenuScene.show();
     }
 }

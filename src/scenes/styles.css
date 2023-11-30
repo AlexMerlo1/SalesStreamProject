@@ -35,6 +35,15 @@
   -fx-text-align: center;
 }
 
+.remove-button {
+  -fx-background-color: #FFA800;
+  -fx-text-fill: black;
+  -fx-font-size: 14px;
+  /* Use relative values for padding */
+  -fx-padding: 0.5em 1em;
+  -fx-border-radius: 5px;
+  -fx-cursor: hand;
+}
 
 
 

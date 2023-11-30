@@ -101,11 +101,11 @@ public class MenuButtons {
     public Button createRemoveButton(Pane layout, ListView<String> orderListView, List<Items.Item> orderList) {
         Button removeBtn = new Button("Remove");
         removeBtn.setOnAction(e -> removeSelectedItem(orderListView, orderList));
-        removeBtn.prefWidthProperty().bind(layout.widthProperty().multiply(0.1));
+        removeBtn.prefWidthProperty().bind(layout.widthProperty().multiply(0.15));
         removeBtn.prefHeightProperty().bind(layout.heightProperty().multiply(0.05));
-        removeBtn.layoutXProperty().bind(layout.widthProperty().multiply(0.6));
+        removeBtn.layoutXProperty().bind(layout.widthProperty().multiply(0.5));
         removeBtn.layoutYProperty().bind(layout.heightProperty().multiply(0.9));
-        // Customize the button properties as needed
+        removeBtn.getStyleClass().add("remove-button");
         return removeBtn;
     }
 
@@ -143,14 +143,14 @@ public class MenuButtons {
     public Button createLogoutButton(Pane menuLayout, Stage primaryStage) {
         Button logoutBtn = new Button("Logout");
 
-        logoutBtn.prefWidthProperty().bind(menuLayout.widthProperty().multiply(0.1));
+        logoutBtn.prefWidthProperty().bind(menuLayout.widthProperty().multiply(0.15));
         logoutBtn.prefHeightProperty().bind(menuLayout.heightProperty().multiply(0.05));
     
         logoutBtn.layoutXProperty().bind(primaryStage.widthProperty().subtract(logoutBtn.widthProperty().add(30))); 
         logoutBtn.layoutYProperty().bind(primaryStage.heightProperty().multiply(0.05));
         
         logoutBtn.setOnAction(e -> switchToLoginScene(primaryStage));
-    
+        logoutBtn.getStyleClass().add("menu-button");
         menuLayout.getChildren().add(logoutBtn);
 
         return logoutBtn;
@@ -160,4 +160,6 @@ public class MenuButtons {
         LoginScene loginScene = new LoginScene(primaryStage);
         loginScene.createLoginScene();
     }
+
+
 }
