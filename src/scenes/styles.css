@@ -28,4 +28,13 @@
   -fx-cursor: hand;
 }
 
+.login-text {
+  -fx-font-size: 2em;
+  -fx-fill: white;
+  -fx-font-weight: bold;
+  -fx-text-align: center;
+}
+
+
+
 

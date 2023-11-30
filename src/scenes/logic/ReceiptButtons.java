@@ -1,12 +1,12 @@
-package scenes.logic;
-
-
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import scenes.MenuScene;
+import scenes.ReceiptScene;
 
 public class ReceiptButtons {
-  public Button createPayWithCardButton(Pane layout) {
-    Button payWithCard = new Button("CARD");
+  public ReceiptButtons(MenuScene menuScene, ReceiptScene receiptScene) {
+    }
+public Button createPayWithCardButton(Pane layout) {
     //payWithCard.setOnAction(e -> checkPayment(orderListView, orderList));
     payWithCard.prefWidthProperty().bind(layout.widthProperty().multiply(0.2));
     payWithCard.prefHeightProperty().bind(layout.heightProperty().multiply(0.1));
@@ -36,6 +36,5 @@ public class ReceiptButtons {
     return cancelButton;
   }
     //private checkPayment() {
-
     //}
 }
