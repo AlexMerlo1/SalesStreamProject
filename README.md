@@ -8,19 +8,26 @@ Kickstarters
 ## Team Members:
 Alex Merlo, Anuj Patel, Liria Margilaj
 
-## Application Goal/Purpose
+Sales Stream is a Java-based point of sale system designed for fast-food restaurants, such as McDonald's or Burger King. The application facilitates efficient order processing and tracking, providing a seamless experience for both customers and restaurant staff.
 
-For this project we are trying to create a point of sales sytem with different menu options that can be used to create and complete orders created. We want to build this because it will test many of the concepts that we have learned throught the semester and put them into one big project. This project would be useful for a fast food restuarant such as McDonalds or Burger King to give an easy way to efficiently track of orders placed and be able to process the purchases quickly.
+Some of the features that are available on Sales Stream are:
+- **User Authentication:** Secure login system to track user sessions.
+- **Order Management:** Users are able to create customer orders with an easy-to-use interface which allows different items to add to a visually appealing receipt on the screen.
+- **Payment Processing:** Simulate payment transactions as if orders were being completed in a real world scenario.
 
-## UML class diagram
+#How to use Sales Stream
+java --module-path 'YOUR JAVAFX PATH' --add-modules javafx.graphics,javafx.controls,javafx.base,javafx.fxml,javafx.media -jar SalesStreamProject.jar
 
-## Plan and estimate of effort
+OR
 
-Alex Merlo:
-Create the login page, switches between scenes, and creating lists to be used throughout the program
+Change
+  "vmArgs": "--module-path 'YOUR JAVAFX PATH' --add-modules javafx.graphics,javafx.controls,javafx.base,javafx.fxml,javafx.media" 
+in launch.json
 
-Liria Margilaj: 
-Create buttons to join items & their prices to the orderList
+AND
 
-Anuj Patel:
-Create the finish order scene which processes "payments" and tracks the data back to the user logged in
+settings.json
+to include the path to each jar file in your javafx lib folder
+
+THEN
+Click run in App.java
